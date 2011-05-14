@@ -1,0 +1,14 @@
+The D'Arcy Friction Factor is used extensivley in fluid system design.
+Calculating its value can often be cumbersome, and prone to error when performed by hand.
+The following little program/function will calculate the D'Arcy Friction Factor given values for the Reynolds Number, Pipe Diameter and Pipe Roughness
+
+Now obviously you can use the several approximations of the implicit Colebrook-White equation such as the Swammee-Jain Equation (which I have also included a function for, it takes the same inputs as the Colebrook-White Equation.
+As for most applications 4 significant figures is all that is required, either equation may be used.
+
+Colebrook Equation 
+D'Arcy Friction Factor 
+Swamee Jain Equation
+
+
+You are obviously free to use this in any way/shape/form with or without my attribution.
+I am only human however and am not liable if anything goes wrong whilst you use this program. If you are a good engineer you would check and triple check all your values.
