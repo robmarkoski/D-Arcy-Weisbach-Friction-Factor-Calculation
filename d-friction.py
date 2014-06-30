@@ -1,5 +1,5 @@
 #Author: Robert Markoski
-#URL: http://www.RobertMarkoski.net/Engineering
+#URL: http://www.RobertMarkoski.net
 #Description: Iterative Calculation of D'Arcy-Weisbach Friction Factor via the Colebrook-White Equation.
 """
 The D'Arcy Friction Factor is used extensivley in fluid system design.
@@ -24,7 +24,7 @@ if not roughness:
     roughness = 0.007 #Default HDPE
 if not density:
     density = 998    #Default Ddensity of water @ 20C
-if not viscosity:     
+if not viscosity:
     viscosity = 0.001 #Default Viscosty of Water @ 20C
 
 #Turn all values into floating points
