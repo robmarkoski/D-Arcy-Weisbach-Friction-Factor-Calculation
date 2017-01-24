@@ -10,3 +10,9 @@ The following little program/function will calculate the D'Arcy Friction Factor 
 You are free to use this in any way/shape/form with or without my attribution.
 
 I am not liable if anything goes wrong whilst you use this program.
+
+CURRENT VERSION: 0.2
+* Converted to Python 3
+* Added some error checking. Will be developed further.
+* Added information on pipe area.
+

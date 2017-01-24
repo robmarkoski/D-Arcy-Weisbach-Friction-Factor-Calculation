@@ -1,10 +1,14 @@
-#Author: Robert Markoski
+#!python
+
+#AUTHOR: Robert Markoski
 #URL: http://www.RobertMarkoski.net
-#Description: Iterative Calculation of D'Arcy-Weisbach Friction Factor via the Colebrook-White Equation.
+#VERSION: 0.2
+
 """
+DESCRIPTION:
 The D'Arcy Friction Factor is used extensivley in fluid system design.
 Calculating its value can often be cumbersome, and prone to error when performed by hand.
-The following little program/function will calculate the D'Arcy Friction Factor given values for the Reynolds Number, Pipe Diameter and Pipe Roughness
+The following little program/function will calculate the D'Arcy Friction Factor given values for the Reynolds Number, Pipe Diameter and Roughness
 
 Colebrook Equation - http://en.wikipedia.org/wiki/Darcy_friction_factor_formulae#Colebrook_equation
 Swamee Jain Equation -http://en.wikipedia.org/wiki/Darcy_friction_factor_formulae#Swamee.E2.80.93Jain_equation
@@ -14,18 +18,32 @@ I am not liable if anything goes wrong whilst you use this program.
 """
 import math # Import Handy Math Functions
 
-flow = raw_input("Please enter Flowrate in L/s: ")
-diameter = raw_input("Please enter Pipe Internal Diameter in mm: ")
-roughness = raw_input("please enter Material Roughness in mm [0.007]: ")
-density = raw_input("Please enter Fluid Density in kg/m3 [998]: ")
-viscosity = raw_input("Please enter Fluid Viscosity in Pa.s [0.001]: ")
+while True: #Quick Error Checking. Will need to convert into function that also checks for non-negative as well as defaults and can be applied against all variables.
+    try:
+        flow = float(input("Please enter Flowrate in L/s: "))
+    except ValueError:
+        print("Flow rate must be a number")
+        continue
+    else:
+        break
+while True:
+    try:
+        diameter = float(input("Please enter Pipe Internal Diameter in mm: "))
+    except ValueError:
+        print("Pipe diameter must be a number.")
+        continue
+    else:
+        break
+roughness = input("please enter Material Roughness in mm [HDPE: 0.007]: ")
+density = input("Please enter Fluid Density in kg/m3 [Water @ 20C: 998]: ")
+viscosity = input("Please enter Fluid Viscosity in Pa.s [Water @ 20C: 0.001]: ")
 
 if not roughness:
-    roughness = 0.007 #Default HDPE
+    roughness = 0.007   #Default HDPE
 if not density:
-    density = 998    #Default Ddensity of water @ 20C
+    density = 998       #Default Ddensity of water @ 20C
 if not viscosity:
-    viscosity = 0.001 #Default Viscosty of Water @ 20C
+    viscosity = 0.001   #Default Viscosty of Water @ 20C
 
 #Turn all values into floating points
 flow = float(flow)
@@ -35,11 +53,11 @@ density = float(density)
 viscosity = float(viscosity)
 
 
-pipearea = diameter**2 / 4 * math.pi #Pipe Area in m^2
+pipearea = float(diameter**2 / 4 * math.pi) #Pipe Area in m^2
 
 velocity = (flow/1000)/pipearea #Flow Velocity in m/s
 
-reynolds = velocity*diameter*density/viscosity # Reynolds Number for Full Circula Pipe
+reynolds = velocity*diameter*density/viscosity # Reynolds Number for Full Circular Pipe
 
 def CalculateF(diameter,roughness,reynolds):
     friction = 0.08 #Starting Friction Factor
@@ -60,9 +78,10 @@ def SwameeJain(diameter, roughness, reynolds):
 friction = CalculateF(diameter,roughness,reynolds)
 
 #Print results in nice 'table'
-print("\n------------RESULTS-------------")
+print("\n---------------RESULTS----------------")
 print("Reynolds Number\t|\t{:.0f}".format(reynolds))
-print("Velocity (m/s)\t|\t{:.3f}".format(velocity))
-print("---------FRICTION FACTOR--------")
+print("Pipe Area \t|\t{:.0f}\t(mm^2)".format(pipearea*1000**2))
+print("Velocity \t|\t{:.2f}\t(m/s)".format(velocity))
+print("------------FRICTION FACTOR-----------")
 print("Colebrook-White\t|\t{:.4f}".format(friction))
 print("Swamee-Jain\t|\t{:.4f}".format(SwameeJain(diameter,roughness,reynolds)))
