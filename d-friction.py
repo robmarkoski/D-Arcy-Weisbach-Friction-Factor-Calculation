@@ -2,14 +2,17 @@
 
 #AUTHOR: Robert Markoski
 #URL: http://www.RobertMarkoski.net
-#VERSION: 0.2
+#VERSION: 0.2.1
+
+#RELEASE DETAILS
+#   0.2.1 - Added headloss table.
 
 """
 DESCRIPTION:
 The D'Arcy Friction Factor is used extensivley in fluid system design.
 Calculating its value can often be cumbersome, and prone to error when performed by hand.
 The following little program/function will calculate the D'Arcy Friction Factor given values for the Reynolds Number, Pipe Diameter and Roughness
-
+FLOW
 Colebrook Equation - http://en.wikipedia.org/wiki/Darcy_friction_factor_formulae#Colebrook_equation
 Swamee Jain Equation -http://en.wikipedia.org/wiki/Darcy_friction_factor_formulae#Swamee.E2.80.93Jain_equation
 
@@ -75,7 +78,11 @@ def CalculateF(diameter,roughness,reynolds):
 def SwameeJain(diameter, roughness, reynolds):
     return 0.25 / (math.log10((roughness/1000)/(3.7*diameter)+5.74/(reynolds**0.9)))**2
 
-friction = CalculateF(diameter,roughness,reynolds)
+def CalculateHL(friction,velocity,diameter):
+    return 100 * friction * 1 / (2*9.81) * velocity**2/diameter
+
+CWFriction = CalculateF(diameter,roughness,reynolds)
+SJFriction = SwameeJain(diameter,roughness,reynolds)
 
 #Print results in nice 'table'
 print("\n---------------RESULTS----------------")
@@ -83,5 +90,8 @@ print("Reynolds Number\t|\t{:.0f}".format(reynolds))
 print("Pipe Area \t|\t{:.0f}\t(mm^2)".format(pipearea*1000**2))
 print("Velocity \t|\t{:.2f}\t(m/s)".format(velocity))
 print("------------FRICTION FACTOR-----------")
-print("Colebrook-White\t|\t{:.4f}".format(friction))
-print("Swamee-Jain\t|\t{:.4f}".format(SwameeJain(diameter,roughness,reynolds)))
+print("Colebrook-White\t|\t{:.4f}".format(CWFriction))
+print("Swamee-Jain\t|\t{:.4f}".format(SJFriction))
+print("--------FRICTION LOSS PER 100M--------")
+print("Colebrook-White\t|\t{:.2f}".format(CalculateHL(CWFriction,velocity,diameter)))
+print("Swamee-Jain\t|\t{:.2f}".format(CalculateHL(SJFriction,velocity,diameter)))
